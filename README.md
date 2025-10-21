@@ -114,52 +114,13 @@ python -m http.server 8080
 
 ---
 
-## Sample Outputs
+## Screenshots
 
-### **Word Count Analysis**
-```
-=== TOP 50 MOST COMMON WORDS IN AMAZON PRODUCT NAMES ===
-with                      752 times
-for                       674 times
-black                     530 times
-usb                       419 times
-cable                     414 times
-charging                  247 times
-```
-
-### **Summary Statistics**
-```
-================================================================================
-AMAZON SALES ANALYTICS SUMMARY
-================================================================================
-Total Products Analyzed: 1,351
-Total Simulated Orders: 1,465
-Total Revenue (After Discount): ₹6,471,737.43
-Total Customer Savings: ₹4,916,692.81 (43.2%)
-Average Product Rating: 4.10⭐
-================================================================================
-```
-
-### **Top Categories by Revenue**
-```
-Computers & Electronics                  ₹4,808,111.50
-Home & Kitchen                           ₹1,640,767.93
-Office Products                          ₹   13,360.00
-```
-
-### **Best Deals**
-```
-💰 Fire-Boltt Ninja Call Pro Plus 1.83" Smart Watch | Save ₹18,200 (91% OFF) | 4.2⭐ | Now: ₹1,799
-💰 rts [2 Pack] Mini USB C Type C Adapter | Save ₹4,705 (94% OFF) | 4.3⭐ | Now: ₹294
-```
-
-
-
-## 📸 Screenshots
-
-## 📸 Screenshots
-
-### **1. Apache Beam Pipeline Execution**
+### **1. Word Count Analysis**
+![Pipeline Execution](assets/S12.png)
+*Word count for the Amazon E-commerce data*
+---
+### **2. Apache Beam Pipeline Execution**
 ![Pipeline Execution](assets/S12.png)
 *Apache Beam pipeline processing Amazon dataset and generating 8 analytics reports*
 
@@ -171,8 +132,6 @@ Office Products                          ₹   13,360.00
 ![Summary Stats](assets/S11.png)
 *Overall sales analytics: 1,351 products analyzed, ₹6.47M revenue, ₹4.91M customer savings (43.2%)*
 
-**Key Metrics**: 1,170 unique customers, ₹4,417 average order value, 4.10⭐ average rating
-
 ---
 
 ### **3. Analytics Output - Revenue by Category**
@@ -182,7 +141,7 @@ Office Products                          ₹   13,360.00
 
 ---
 
-### **6. Analytics Output - Top Rated Products**
+### **4. Analytics Output - Top Rated Products**
 ![Top Rated](assets/S3.png)
 *Top 30 highly-rated products (4.5+ ⭐ with 1000+ reviews)*
 
@@ -190,14 +149,14 @@ Office Products                          ₹   13,360.00
 
 ---
 
-### **7. Analytics Output - Revenue by Rating Range**
+### **5. Analytics Output - Revenue by Rating Range**
 ![Rating Analysis](assets/S5.png)
 *Revenue distribution shows 4.0-4.4⭐ products generate ₹5.24M (81% of revenue)*
 
 ---
 
 
-### **9. FastAPI Server Running**
+### **6. FastAPI Server Running**
 ![FastAPI Server](assets/S2.png)
 *FastAPI backend started with Uvicorn on http://localhost:8000*
 
@@ -205,7 +164,7 @@ Office Products                          ₹   13,360.00
 
 ---
 
-### **10. FastAPI Interactive Documentation (Swagger UI)**
+### **7. FastAPI Interactive Documentation (Swagger UI)**
 ![API Docs](assets/S1.png)
 *Interactive API documentation showing all 9 endpoints with test interface*
 
@@ -213,13 +172,7 @@ Office Products                          ₹   13,360.00
 
 ---
 
-### **11. API Root Endpoint Response**
-![API Root](assets/S12.png)
-*JSON response showing API version and available endpoint URLs*
-
----
-
-### **12. Web Dashboard - Overview with KPIs**
+### **8. Web Dashboard - Overview with KPIs**
 ![Dashboard Overview](assets/D1.png)
 *Interactive dashboard displaying key metrics and visualizations*
 
@@ -229,7 +182,7 @@ Office Products                          ₹   13,360.00
 
 ---
 
-### **13. Web Dashboard - Products & Best Deals**
+### **9. Web Dashboard - Products & Best Deals**
 ![Dashboard Charts](assets/D2.png)
 *Top 10 Products chart and Best Deals table with color-coded savings badges*
 
@@ -265,7 +218,7 @@ Demonstrated Apache Beam's flexibility and scalability
 
 
 ---
-**Novia D'Silva**  
+**Novia Dsilva**  
 MLOps Lab Assignment - Apache Beam Analytics
 
 ---
