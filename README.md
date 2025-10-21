@@ -36,7 +36,7 @@ This project demonstrates the transformation of Apache Beam's classic **word cou
 
 ---
 
-## 🔄 Key Modifications from Original Tutorial
+## Key Modifications from Original Tutorial
 
 | Component | Original | Our Implementation |
 |-----------|----------|-------------------|
@@ -49,26 +49,15 @@ This project demonstrates the transformation of Apache Beam's classic **word cou
 | **Backend** | None | FastAPI REST API |
 | **Frontend** | None | Interactive HTML dashboard |
 
----
 
-## 🛠️ Technical Stack
-
-- **Apache Beam** - Data processing pipeline framework
-- **Python 3.x** - Core programming language
-- **FastAPI** - REST API backend
-- **Chart.js** - Data visualization
-- **HTML/CSS/JavaScript** - Interactive dashboard
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 Apache_Beam_Amazon_Analytics/
 ├── data/
 │   └── amazon.csv                          # Input dataset (1,351 products)
 │
-├── outputs/                                 # Generated analytics reports
+├── outputs/                                # Generated analytics reports
 │   ├── 00_summary.txt                      # Overall statistics
 │   ├── 01_revenue_by_category.txt          # Category performance
 │   ├── 02_top_products.txt                 # Best sellers
@@ -84,13 +73,13 @@ Apache_Beam_Amazon_Analytics/
 ├── pipeline.py                              # Main Apache Beam pipeline
 ├── api.py                                   # FastAPI backend server
 ├── dashboard.html                           # Web visualization interface
-├── Try_Apache_Beam_Python.ipynb            # Jupyter notebook
+├── Try_Apache_Beam_Python.ipynb             # Jupyter notebook
 └── README.md                                # This file
 ```
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### **1. Install Dependencies**
 ```bash
@@ -125,7 +114,7 @@ python -m http.server 8080
 
 ---
 
-## 📊 Sample Outputs
+## Sample Outputs
 
 ### **Word Count Analysis**
 ```
@@ -164,73 +153,92 @@ Office Products                          ₹   13,360.00
 💰 rts [2 Pack] Mini USB C Type C Adapter | Save ₹4,705 (94% OFF) | 4.3⭐ | Now: ₹294
 ```
 
----
 
-## 🎓 Apache Beam Concepts Demonstrated
-
-| Concept | Usage |
-|---------|-------|
-| **ReadFromText** | Read CSV files line by line |
-| **Map** | Parse CSV, transform data |
-| **ParDo** | Custom transformations (DoFn classes) |
-| **Filter** | Remove invalid entries |
-| **FlatMap** | Extract multiple elements |
-| **CombinePerKey** | Aggregate data by key |
-| **GroupByKey** | Group values by key |
-| **Top.Of()** | Get top N results |
-| **WriteToText** | Save results to files |
-
----
-
-## 💡 Key Features
-
-### **1. CSV Data Handling**
-- Robust parsing of quoted fields with commas
-- Price cleaning (₹ symbol, comma removal)
-- Percentage and rating normalization
-- Null value filtering
-
-### **2. Business Analytics**
-- Customer lifetime value segmentation
-- Discount effectiveness analysis
-- Product quality correlation with revenue
-- Best deal identification (discount + rating)
-
-### **3. Web Integration**
-- RESTful API endpoints for all analytics
-- Real-time dashboard with interactive charts
-- One-click pipeline execution from browser
-- Automatic data refresh
-
-### **4. Scalable Architecture**
-- DirectRunner for local testing
-- Ready for DataflowRunner (Google Cloud)
-- Modular DoFn classes for transformations
-- Reusable formatting functions
-
----
 
 ## 📸 Screenshots
 
-### **Dashboard Overview**
-![Dashboard](screenshots/dashboard.png)
-*Interactive analytics dashboard showing KPIs, charts, and best deals*
+## 📸 Screenshots
 
-### **Pipeline Execution**
-![Pipeline Output](screenshots/pipeline_output.png)
-*Apache Beam pipeline generating 8 analytics reports*
+### **1. Apache Beam Pipeline Execution**
+![Pipeline Execution](assets/S12.png)
+*Apache Beam pipeline processing Amazon dataset and generating 8 analytics reports*
 
-### **Word Count Results**
-![Word Count](screenshots/word_count.png)
-*Top 50 most common words in Amazon product names*
-
-### **FastAPI Documentation**
-![API Docs](screenshots/api_docs.png)
-*Auto-generated API documentation at /docs endpoint*
+**Status**: Pipeline execution complete! All output files created successfully.
 
 ---
 
-## 🔍 API Endpoints
+### **2. Analytics Output - Summary Statistics**
+![Summary Stats](assets/S11.png)
+*Overall sales analytics: 1,351 products analyzed, ₹6.47M revenue, ₹4.91M customer savings (43.2%)*
+
+**Key Metrics**: 1,170 unique customers, ₹4,417 average order value, 4.10⭐ average rating
+
+---
+
+### **3. Analytics Output - Revenue by Category**
+![Category Revenue](assets/S8.png)
+*Category performance - Computers & Electronics leads with ₹4.8M (74% of total revenue)*
+
+
+---
+
+### **6. Analytics Output - Top Rated Products**
+![Top Rated](assets/S3.png)
+*Top 30 highly-rated products (4.5+ ⭐ with 1000+ reviews)*
+
+**Most Reviewed**: SanDisk Extreme SD Card with 205,052 customer reviews
+
+---
+
+### **7. Analytics Output - Revenue by Rating Range**
+![Rating Analysis](assets/S5.png)
+*Revenue distribution shows 4.0-4.4⭐ products generate ₹5.24M (81% of revenue)*
+
+---
+
+
+### **9. FastAPI Server Running**
+![FastAPI Server](assets/S2.png)
+*FastAPI backend started with Uvicorn on http://localhost:8000*
+
+**Features**: Auto-generated API docs, CORS enabled, background task support
+
+---
+
+### **10. FastAPI Interactive Documentation (Swagger UI)**
+![API Docs](assets/S1.png)
+*Interactive API documentation showing all 9 endpoints with test interface*
+
+**Endpoints**: Health check, analytics summary, categories, products, customers, deals, pipeline trigger
+
+---
+
+### **11. API Root Endpoint Response**
+![API Root](assets/S12.png)
+*JSON response showing API version and available endpoint URLs*
+
+---
+
+### **12. Web Dashboard - Overview with KPIs**
+![Dashboard Overview](assets/D1.png)
+*Interactive dashboard displaying key metrics and visualizations*
+
+**KPIs**: 1,351 products | ₹6.47M revenue | ₹4.91M savings | 4.10⭐ rating
+
+**Charts**: Revenue by Category (bar) and Customer Segments (doughnut)
+
+---
+
+### **13. Web Dashboard - Products & Best Deals**
+![Dashboard Charts](assets/D2.png)
+*Top 10 Products chart and Best Deals table with color-coded savings badges*
+
+**Best Deal**: Fire-Boltt Smart Watch - Save ₹18,200 (91% OFF) | 4.2⭐ | Now ₹1,799
+
+
+---
+
+## API Endpoints
 
 ```
 GET  /health                              # System health check
@@ -245,7 +253,7 @@ GET  /download/{report_name}              # Download specific report
 ```
 
 
-## 🎯 Learning Outcomes
+## Learning Outcomes
 
 Adapted text processing pipeline to structured CSV data  
 Implemented robust data parsing and validation  
