@@ -1,0 +1,8 @@
+=== REVENUE BY PRODUCT CATEGORY ===
+Computers & Electronics                  ₹4,808,111.50
+Home & Kitchen                           ₹1,640,767.93
+Office Products                          ₹   13,360.00
+Automotive                               ₹    4,678.00
+Musical Instruments                      ₹    2,872.00
+Health & Beauty                          ₹    1,798.00
+Toys & Games                             ₹      150.00

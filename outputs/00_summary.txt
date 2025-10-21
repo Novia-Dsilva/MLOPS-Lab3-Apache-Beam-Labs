@@ -1,0 +1,14 @@
+================================================================================
+AMAZON SALES ANALYTICS SUMMARY
+================================================================================
+Total Products Analyzed: 1,351
+Total Simulated Orders: 1,465
+Total Revenue (After Discount): ₹6,471,737.43
+Total MRP Value: ₹11,388,430.24
+Total Customer Savings: ₹4,916,692.81 (43.2%)
+Unique Customers: 1,170
+Average Order Value: ₹4,417.57
+Average Discount: 47.7%
+Average Product Rating: 4.10⭐
+Total Customer Reviews: 26,766,377
+================================================================================

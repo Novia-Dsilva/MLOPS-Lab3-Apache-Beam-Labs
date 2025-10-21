@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .run-pipeline-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .run-pipeline-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .run-pipeline-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .kpi-card h3 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .kpi-card .value {
+            color: #667eea;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .kpi-card .subtext {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .deals-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .deals-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .deals-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .deals-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .deals-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .savings-badge {
+            background: #10b981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .discount-badge {
+            background: #f59e0b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            padding: 50px;
+        }
+
+        .error {
+            background: #ef4444;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-healthy {
+            background: #10b981;
+        }
+
+        .status-error {
+            background: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>📊 E-Commerce Analytics</h1>
+                <p>Real-time Amazon Sales Insights powered by Apache Beam</p>
+                <div style="margin-top: 10px;">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Loading...</span>
+                </div>
+            </div>
+            <button class="run-pipeline-btn" id="runPipelineBtn" onclick="runPipeline()">
+                🚀 Run Pipeline
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">Loading analytics data...</div>
+
+        <!-- Error Message -->
+        <div class="error" id="error" style="display: none;"></div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid" id="kpiGrid" style="display: none;">
+            <div class="kpi-card">
+                <h3>Total Products</h3>
+                <div class="value" id="totalProducts">-</div>
+                <div class="subtext">Analyzed</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Total Revenue</h3>
+                <div class="value" id="totalRevenue">-</div>
+                <div class="subtext">After Discounts</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Customer Savings</h3>
+                <div class="value" id="totalSavings">-</div>
+                <div class="subtext">Total Discounts</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Average Rating</h3>
+                <div class="value" id="avgRating">-</div>
+                <div class="subtext">⭐ Product Quality</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid" id="chartsGrid" style="display: none;">
+            <div class="chart-card">
+                <h2>Revenue by Category</h2>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Customer Segments</h2>
+                <canvas id="segmentChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Top 10 Products</h2>
+                <canvas id="productsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Best Deals Table -->
+        <div class="deals-section" id="dealsSection" style="display: none;">
+            <h2>🔥 Top 10 Best Deals</h2>
+            <table class="deals-table" id="dealsTable">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Savings</th>
+                        <th>Discount</th>
+                        <th>Rating</th>
+                        <th>Current Price</th>
+                    </tr>
+                </thead>
+                <tbody id="dealsBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Check API health
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                
+                document.getElementById('statusIndicator').className = 
+                    data.status === 'healthy' ? 'status-indicator status-healthy' : 'status-indicator status-error';
+                document.getElementById('statusText').textContent = 
+                    data.outputs_available ? 'Data Available ✓' : 'No Data - Run Pipeline';
+                
+                return data.outputs_available;
+            } catch (error) {
+                document.getElementById('statusIndicator').className = 'status-indicator status-error';
+                document.getElementById('statusText').textContent = 'API Offline - Start FastAPI server';
+                return false;
+            }
+        }
+
+        // Run pipeline
+        async function runPipeline() {
+            const btn = document.getElementById('runPipelineBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Running Pipeline...';
+
+            try {
+                const response = await fetch(`${API_BASE}/run-pipeline`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                alert('Pipeline started! Refresh in 30 seconds to see results.');
+                
+                // Wait and reload
+                setTimeout(() => {
+                    location.reload();
+                }, 30000);
+            } catch (error) {
+                alert('Error running pipeline: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = '🚀 Run Pipeline';
+            }
+        }
+
+        // Load all data
+        async function loadDashboard() {
+            try {
+                const hasData = await checkHealth();
+                
+                if (!hasData) {
+                    document.getElementById('loading').textContent = 
+                        'No data available. Click "Run Pipeline" to generate analytics.';
+                    return;
+                }
+
+                // Load summary
+                const summary = await fetch(`${API_BASE}/analytics/summary`).then(r => r.json());
+                
+                // Update KPIs
+                document.getElementById('totalProducts').textContent = summary.total_products.toLocaleString();
+                document.getElementById('totalRevenue').textContent = '₹' + summary.total_revenue.toLocaleString(undefined, {maximumFractionDigits: 0});
+                document.getElementById('totalSavings').textContent = '₹' + summary.total_savings.toLocaleString(undefined, {maximumFractionDigits: 0});
+                document.getElementById('avgRating').textContent = summary.avg_rating.toFixed(2);
+
+                // Show KPIs
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('kpiGrid').style.display = 'grid';
+                document.getElementById('chartsGrid').style.display = 'grid';
+                document.getElementById('dealsSection').style.display = 'block';
+
+                // Load and display charts
+                await loadCategoryChart();
+                await loadSegmentChart();
+                await loadProductsChart();
+                await loadDealsTable();
+
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = 'Error loading data: ' + error.message;
+                console.error('Dashboard error:', error);
+            }
+        }
+
+        // Category Chart
+        async function loadCategoryChart() {
+            const categories = await fetch(`${API_BASE}/analytics/categories`).then(r => r.json());
+            
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categories.map(c => c.category),
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: categories.map(c => c.revenue),
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Segment Chart
+        async function loadSegmentChart() {
+            const segments = await fetch(`${API_BASE}/analytics/customer-segments-summary`).then(r => r.json());
+            
+            const ctx = document.getElementById('segmentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: segments.segments.map(s => s.segment),
+                    datasets: [{
+                        data: segments.segments.map(s => s.count),
+                        backgroundColor: [
+                            'rgba(236, 72, 153, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Products Chart - FIXED
+        async function loadProductsChart() {
+            const products = await fetch(`${API_BASE}/analytics/products?limit=10`).then(r => r.json());
+            
+            const ctx = document.getElementById('productsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',  // Changed from 'horizontalBar'
+                data: {
+                    labels: products.map(p => p.product.substring(0, 30) + '...'),
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: products.map(p => p.revenue),
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',  // This makes it horizontal
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Deals Table
+        async function loadDealsTable() {
+            const deals = await fetch(`${API_BASE}/analytics/deals?limit=10`).then(r => r.json());
+            
+            const tbody = document.getElementById('dealsBody');
+            tbody.innerHTML = '';
+            
+            deals.forEach(deal => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${deal.product}</td>
+                    <td><span class="savings-badge">₹${deal.savings.toLocaleString()}</span></td>
+                    <td><span class="discount-badge">${deal.discount.toFixed(0)}% OFF</span></td>
+                    <td>${deal.rating.toFixed(1)} ⭐</td>
+                    <td>₹${deal.current_price.toLocaleString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Load dashboard on page load
+        window.onload = loadDashboard;
+    </script>
+</body>
+</html>
