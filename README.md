@@ -213,6 +213,5 @@ Demonstrated Apache Beam's flexibility and scalability
 
 ---
 **Novia Dsilva**  
-MLOps Lab Assignment - Apache Beam Analytics
-
+MLOps Lab Assignment - Apache Beam
 ---
