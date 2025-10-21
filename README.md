@@ -116,9 +116,9 @@ python -m http.server 8080
 
 ## Screenshots
 
-### **1. Word Count Analysis**
-![Pipeline Execution](assets/S12.png)
-*Word count for the Amazon E-commerce data*
+### **1. Word Count Analysis Amazon E-commerce data**
+![Pipeline Execution](assets/S13.png)
+
 ---
 ### **2. Apache Beam Pipeline Execution**
 ![Pipeline Execution](assets/S12.png)
@@ -149,14 +149,8 @@ python -m http.server 8080
 
 ---
 
-### **5. Analytics Output - Revenue by Rating Range**
-![Rating Analysis](assets/S5.png)
-*Revenue distribution shows 4.0-4.4⭐ products generate ₹5.24M (81% of revenue)*
 
----
-
-
-### **6. FastAPI Server Running**
+### **5. FastAPI Server Running**
 ![FastAPI Server](assets/S2.png)
 *FastAPI backend started with Uvicorn on http://localhost:8000*
 
@@ -164,7 +158,7 @@ python -m http.server 8080
 
 ---
 
-### **7. FastAPI Interactive Documentation (Swagger UI)**
+### **6. FastAPI Interactive Documentation (Swagger UI)**
 ![API Docs](assets/S1.png)
 *Interactive API documentation showing all 9 endpoints with test interface*
 
@@ -172,7 +166,7 @@ python -m http.server 8080
 
 ---
 
-### **8. Web Dashboard - Overview with KPIs**
+### **7. Web Dashboard - Overview with KPIs**
 ![Dashboard Overview](assets/D1.png)
 *Interactive dashboard displaying key metrics and visualizations*
 
@@ -182,7 +176,7 @@ python -m http.server 8080
 
 ---
 
-### **9. Web Dashboard - Products & Best Deals**
+### **8. Web Dashboard - Products & Best Deals**
 ![Dashboard Charts](assets/D2.png)
 *Top 10 Products chart and Best Deals table with color-coded savings badges*
 
