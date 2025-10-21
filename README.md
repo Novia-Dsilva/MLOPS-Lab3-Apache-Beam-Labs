@@ -1,6 +1,6 @@
 # MLOPS-Lab3-Apache-Beam-Labs
 
-# Amazon E-Commerce Analytics using Apache Beam
+## Amazon E-Commerce Analytics using Apache Beam
 
 A comprehensive data processing pipeline that analyzes Amazon product data using Apache Beam, with a FastAPI backend and interactive web dashboard.
 
@@ -12,7 +12,7 @@ This project demonstrates the transformation of Apache Beam's classic **word cou
 
 ---
 
-## What We Built
+## What is Built
 
 ### **Core Pipeline: Word Count on Amazon Products**
 - **Original**: Count word frequencies in Shakespeare's King Lear text file
@@ -36,9 +36,9 @@ This project demonstrates the transformation of Apache Beam's classic **word cou
 
 ---
 
-## Key Modifications from Original Tutorial
+## Key Modifications 
 
-| Component | Original | Our Implementation |
+| Component | Original |  Implementation |
 |-----------|----------|-------------------|
 | **Input** | Text file (`kinglear.txt`) | CSV file (`amazon.csv`) |
 | **Data Source** | Plain text lines | Structured e-commerce data |
@@ -46,7 +46,7 @@ This project demonstrates the transformation of Apache Beam's classic **word cou
 | **Data Cleaning** | None | Price/rating/percentage cleaning |
 | **Validation** | None | Filter null/invalid entries |
 | **Outputs** | Single word count | 8 analytics reports + word count |
-| **Backend** | None | FastAPI REST API |
+| **Backend** | None | FastAPI API |
 | **Frontend** | None | Interactive HTML dashboard |
 
 
